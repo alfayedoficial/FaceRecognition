@@ -14,10 +14,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.alialfayed.facerecognition.R
+import com.alialfayed.facerecognition.model.PatientModel
 import com.alialfayed.facerecognition.viewmodel.AddPatientViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_patient.*
+import kotlinx.coroutines.NonCancellable.start
 
 class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
 
@@ -35,6 +39,8 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
 
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
+    private  var mdatabaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Database")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -235,6 +241,50 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
             startActivity(startActivity)
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        mdatabaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.hasChild("")){
+                    for (patSnapshot in p0.children){
+                        val patPatient = patSnapshot.getValue(PatientModel::class.java)
+                        if (patPatient!!.getuserId() == FirebaseAuth.getInstance().currentUser!!.uid){
+                            btnSelectImage1_Add_Patient.isEnabled = false
+                            btnSelectImage2_Add_Patient.isEnabled = false
+                            btnSelectImage3_Add_Patient.isEnabled = false
+                            btnSelectImage4_Add_Patient.isEnabled = false
+                            btnSelectImage5_Add_Patient.isEnabled = false
+                            btn_Update_Add_Patient.isEnabled = false
+                            btn_Save_Add_Patient.isEnabled = false
+                            edtId_Add_Patient.isEnabled = false
+                            edtName_Add_Patient.isEnabled = false
+                            edtAge_Add_Patient.isEnabled = false
+                            textView8.visibility = View.VISIBLE
+                        }else{
+                            btnSelectImage1_Add_Patient.isEnabled = true
+                            btnSelectImage2_Add_Patient.isEnabled = true
+                            btnSelectImage3_Add_Patient.isEnabled = true
+                            btnSelectImage4_Add_Patient.isEnabled = true
+                            btnSelectImage5_Add_Patient.isEnabled = true
+                            btn_Update_Add_Patient.isEnabled = true
+                            btn_Save_Add_Patient.isEnabled = true
+                            edtId_Add_Patient.isEnabled = true
+                            edtName_Add_Patient.isEnabled = true
+                            edtAge_Add_Patient.isEnabled = true
+                            textView8.visibility = View.GONE
+
+                        }
+                    }
+                }
+            }
+        })
     }
 
 

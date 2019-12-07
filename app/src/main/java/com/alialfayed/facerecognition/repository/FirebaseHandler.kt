@@ -116,8 +116,6 @@ class FirebaseHandler(activity: Activity) {
                                 val profileDatabase = profileSnapShot.getValue(User::class.java)
                                 if (profileDatabase!!.getuserId() ==FirebaseAuth.getInstance().currentUser?.uid){
                                     signInViewModel?.SignInSuccessful()
-                                }else{
-                                    signInViewModel?.completedata()
                                 }
 
                             }

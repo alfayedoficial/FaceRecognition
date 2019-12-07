@@ -29,7 +29,10 @@ class HomeActivity : AppCompatActivity() , View.OnClickListener{
     private lateinit var mdatabaseReference : DatabaseReference
     private lateinit var mPhoneDatabaseReference: DatabaseReference
     private lateinit var patientData :PatientModel
-    private lateinit var phoneListData: PhoneModel
+
+    companion object{
+         lateinit var phoneListData: PhoneModel
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
