@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#3D2C83</color>
+    <color name="colorAccent">#FFC611</color>
+    <color name="ripple">#473594</color>
+    <color name="color_text">#473594</color>
+    <color name="color_hint_text">#83473594</color>
+    <color name="edit">#F5F5FC</color>
+    <color name="white">#fff</color>
+    <color name="green">#5CBA47</color>
+    <color name="yellow">#FFC611</color>
+    <color name="red">#E85A5A</color>
+
+</resources>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.AddNumberCallActivity"
+    android:background="@drawable/background">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/font_app"
+                android:text="@string/add_number_call"
+                android:textColor="@color/color_text"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edtDoctor_Number_Add_Number_Call"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:background="@drawable/btn_sky"
+                android:elevation="2dp"
+                android:ems="3"
+                android:hint="Doctor Number"
+                android:inputType="text|phone"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_text"
+                android:textColorHint="@color/color_hint_text"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/edtPolice_Number_Add_Number_Call"
+                app:layout_constraintStart_toStartOf="@+id/edtPolice_Number_Add_Number_Call"
+                app:layout_constraintTop_toBottomOf="@+id/edtPolice_Number_Add_Number_Call"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/edtHospital_Number_Add_Number_Call"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:background="@drawable/btn_sky"
+                android:elevation="2dp"
+                android:ems="3"
+                android:hint="Hospital Number"
+                android:inputType="text|phone"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_text"
+                android:textColorHint="@color/color_hint_text"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/edtDoctor_Number_Add_Number_Call"
+                app:layout_constraintStart_toStartOf="@+id/edtDoctor_Number_Add_Number_Call"
+                app:layout_constraintTop_toBottomOf="@+id/edtDoctor_Number_Add_Number_Call"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/edtHomeNumber_Add_Number_Call"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
+                android:autofillHints=""
+                android:background="@drawable/btn_skynullripple"
+                android:elevation="2dp"
+                android:ems="10"
+                android:hint="Home Number"
+                android:inputType="text|phone"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_text"
+                android:textColorHint="@color/color_hint_text"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/edtPolice_Number_Add_Number_Call"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:background="@drawable/btn_sky"
+                android:elevation="2dp"
+                android:hint="Police Number"
+                android:inputType="text|phone"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_text"
+                android:textColorHint="@color/color_hint_text"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/edtHomeNumber_Add_Number_Call"
+                app:layout_constraintStart_toStartOf="@+id/edtHomeNumber_Add_Number_Call"
+                app:layout_constraintTop_toBottomOf="@+id/edtHomeNumber_Add_Number_Call"
+                tools:ignore="TextFields" />
+
+            <Button
+                android:id="@+id/btn_Save_Add_Number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_green"
+                android:elevation="2dp"
+                android:fontFamily="@font/bein"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/edtHospital_Number_Add_Number_Call"
+                app:layout_constraintStart_toStartOf="@+id/edtHospital_Number_Add_Number_Call"
+                app:layout_constraintTop_toBottomOf="@+id/edtHospital_Number_Add_Number_Call" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/color_text"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnPatient_Number_Add_Number_Call"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_yellow"
+            app:srcCompat="@drawable/ic_add_pat" />
+
+        <ImageButton
+            android:id="@+id/btnAddNumber_Number_Add_Number_Call"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_yellow"
+            app:srcCompat="@drawable/ic_contacts" />
+
+        <ImageButton
+            android:id="@+id/btnHome_Number_Add_Number_Call"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_yellow"
+            app:srcCompat="@drawable/ic_home_icon_silhouette" />
+
+        <ImageButton
+            android:id="@+id/btnProfile_Number_Add_Number_Call"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_yellow"
+            app:srcCompat="@drawable/ic_user" />
+
+        <ImageButton
+            android:id="@+id/btnPolicy_Number_Add_Number_Call"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_yellow"
+            app:srcCompat="@drawable/ic_privacy_policy" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_add_number_call" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

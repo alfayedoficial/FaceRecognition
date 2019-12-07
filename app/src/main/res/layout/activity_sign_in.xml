@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.SignInActivity"
+    android:background="@drawable/background"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:elevation="20dp"
+        android:transitionName="@string/logo_transition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_signin_vector" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/font_app"
+        android:text="@string/sign_in"
+        android:textColor="@color/color_text"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/edtEmail_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <EditText
+        android:id="@+id/edtEmail_SignIn"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints=""
+        android:background="@drawable/btn_sky"
+        android:elevation="2dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/color_text"
+        android:textColorHint="@color/color_hint_text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/edtPassword_SignIn"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints=""
+        android:background="@drawable/btn_sky"
+        android:elevation="2dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/color_text"
+        android:textColorHint="@color/color_hint_text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail_SignIn" />
+
+    <Button
+        android:id="@+id/btnSignIn_SignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/btn_green"
+        android:elevation="4dp"
+        android:fontFamily="@font/bein"
+        android:text="@string/sign_in"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_SignIn" />
+
+    <Button
+        android:id="@+id/btnGoogle_SignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/btn_yellow"
+        android:drawableStart="@drawable/ic_google_icon"
+        android:elevation="20dp"
+        android:fontFamily="@font/bein"
+        android:paddingStart="50dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="10dp"
+        android:text="@string/sign_in_with_google"
+        android:textColor="@color/white"
+        android:textColorHint="@color/ripple"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintStart_toStartOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn_SignIn" />
+
+    <Button
+        android:id="@+id/btnForgetPassword_SignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:text="@string/forget_password"
+        android:textColor="@color/color_text"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintStart_toStartOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn_SignIn" />
+
+    <Button
+        android:id="@+id/btnCreateAnAccount_SignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="@string/you_do_not_have_an_account"
+        android:textColor="@color/color_text"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintStart_toStartOf="@+id/btnSignIn_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgetPassword_SignIn" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_SignIn"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/edtPassword_SignIn"
+        app:layout_constraintStart_toStartOf="@+id/edtPassword_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword_SignIn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

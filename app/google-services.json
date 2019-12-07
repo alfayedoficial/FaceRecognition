@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "260044422169",
+    "firebase_url": "https://facerecognition-1ebef.firebaseio.com",
+    "project_id": "facerecognition-1ebef",
+    "storage_bucket": "facerecognition-1ebef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260044422169:android:7cc5cb8166267dc7ac3e88",
+        "android_client_info": {
+          "package_name": "com.alialfayed.facerecognition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260044422169-bqbtn4goa1o2le78abcs8vj6b2eu29f8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alialfayed.facerecognition",
+            "certificate_hash": "8aa7f7c4442e5ae46cb3014823859f3d6d450892"
+          }
+        },
+        {
+          "client_id": "260044422169-a6l40fpslvu345v9bqmtlsl8c0j1m139.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alialfayed.facerecognition",
+            "certificate_hash": "ad1e980dcedb3467bc0577fc2e7175d9205d22a3"
+          }
+        },
+        {
+          "client_id": "260044422169-3busm6gilacugcjbddfk7udjvqht7jdc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB62DauSoP2yG3GDklv9Aht0Qw88MDgMh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260044422169-3busm6gilacugcjbddfk7udjvqht7jdc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
