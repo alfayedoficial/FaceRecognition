@@ -23,7 +23,7 @@ import kotlinx.coroutines.NonCancellable.start
  * Class do :
  * Created by ( Eng Ali)
  */
-class ServiceOnBackground(): Service() {
+class ServiceOnBackground: Service() {
 
     private  var mdatabaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Database")
 
@@ -52,9 +52,7 @@ class ServiceOnBackground(): Service() {
                 }
             }
         })
-
         return START_NOT_STICKY
-
 
     }
 
