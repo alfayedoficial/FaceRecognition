@@ -1,7 +1,7 @@
 package com.alialfayed.facerecognition.model
 
 /**
- * Class do :
+ * Class do : this class of patient Information
  * Created by ( Eng Ali)
  */
 class PatientModel {
@@ -38,6 +38,11 @@ class PatientModel {
         this.patientimage5 =mPatientImage_5
         this.visibleData =mVisibleData
 
+    }
+    constructor(mUserId :String, mPatientCode :String ,mPatientImage_1 :String){
+        this.userId = mUserId
+        this.patientCode = mPatientCode
+        this.patientimage1 = mPatientImage_1
     }
     fun getuserId ():String{ return userId}
     fun getpatientId ():String{ return patientId}

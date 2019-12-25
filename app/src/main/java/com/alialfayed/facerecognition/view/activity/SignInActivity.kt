@@ -1,9 +1,12 @@
 package com.alialfayed.facerecognition.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
@@ -19,12 +22,14 @@ import java.security.AccessController.getContext
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
+    // References of Model class -> this for connection to server and activity
     private lateinit var signInViewModel : SignInViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
         signInViewModel = ViewModelProviders.of(this,MyViewModelFactory(this)).get(SignInViewModel::class.java)
+        // set Button on ready to able to click
         initComponent()
 
     }
@@ -39,23 +44,30 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         when (view?.id) {
             R.id.btnSignIn_SignIn -> {
 
-                if (email.isEmpty()){
+                if (email.isNullOrEmpty()){
+                    Log.i("Signin","1")
                     edtEmail_SignIn.error = "Email Required!\nPlease, Type your Email!"
                     edtEmail_SignIn.requestFocus()
 
-                } else if (password.isEmpty()){
+                } else if (password.isNullOrEmpty()){
+                    Log.i("Signin","2")
                     edtPassword_SignIn.error = "Password Required!\nPlease, Type your Password!"
                     edtPassword_SignIn.requestFocus()
 
                 } else if (!signInViewModel.isNetworkConnected()){
+                    Log.i("Signin","3")
                     AlertDialog.Builder(this@SignInActivity)
                         .setTitle("Error")
-                        .setMessage("Your Data transfer and Wifi connection closed!\nOpen Internet Connection and try again!")
+                        .setMessage("Your Data transfer or Wifi connection closed!\nOpen Internet Connection and try again!")
                         .setIcon(R.drawable.ic_cancel)
-                        .setPositiveButton("Ok") { _, _ ->  }
+                        .setPositiveButton("open") { _, _ ->
+                            startActivity( Intent(Settings.ACTION_WIFI_SETTINGS))
+
+                        }
                         .show()
 
                 } else {
+                    Log.i("Signin","4")
                     signInViewModel.signInCheck(email, password)
                 }
 
@@ -93,10 +105,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // when user go back button finish Activity
     override fun onBackPressed() {
         finish()
     }
 
+    // this is attached by Sign In Activity and Sign In ViewModel
     internal class MyViewModelFactory(val signInActivity: SignInActivity):
         ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

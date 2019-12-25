@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
  * Created by ( Eng Ali)
  */
 class SignInViewModel(val signInActivity: SignInActivity) : ViewModel() {
+
+    // References of Firebase class -> this for connection to server
     private var firebaseHandler: FirebaseHandler = FirebaseHandler(signInActivity, this)
 
     /**
@@ -31,21 +33,35 @@ class SignInViewModel(val signInActivity: SignInActivity) : ViewModel() {
     }
 
     /**
+     * method go to info Activity After check method on viewmodel
+     */
+    fun goToInfo() {
+        val msg = "Sorry , You do not have Profile data"
+        AlertDialog.Builder(signInActivity)
+            .setTitle("Error")
+            .setMessage(msg)
+            .setCancelable(false)
+            .setIcon(R.drawable.ic_cancel)
+            .setPositiveButton("Create Profile Data") { _, _ ->
+                val start = Intent(signInActivity, InfoActivity::class.java)
+                signInActivity.startActivity(start)
+                signInActivity.finish()
+            }
+            .show()
+
+
+    }
+
+
+    /**
      * method go to home Activity After check method on viewmodel
      */
     fun SignInfailed() {
         signInActivity.disableLayout(true)
     }
 
-    /**
-     * to complete data
-     */
-    fun completedata(){
-        val start = Intent(signInActivity, InfoActivity::class.java)
-        signInActivity.startActivity(start)
-        signInActivity.finish()
-    }
 
+    // Dialog
     fun setMsgAlert(msg: String) {
         AlertDialog.Builder(signInActivity)
             .setTitle("Error")
@@ -55,6 +71,7 @@ class SignInViewModel(val signInActivity: SignInActivity) : ViewModel() {
             .show()
     }
 
+    // check network
     fun isNetworkConnected(): Boolean {
         val connectivityManager =
             signInActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

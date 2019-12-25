@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'io.fabric'
 
 android {
 
@@ -37,17 +38,17 @@ android {
         signingConfig signingConfigs.release
     }
     buildTypes {
-//        release {
-//            debuggable false
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfigs.release
-//        }
-        debug {
-            debuggable true
+        release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfigs.release
         }
+//        debug {
+//            debuggable true
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
     }
 }
 
@@ -80,6 +81,8 @@ dependencies {
     implementation 'com.etebarian:meow-bottom-navigation:1.0.4'
 
 
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
 
 }

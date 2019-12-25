@@ -21,11 +21,12 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 
 @Suppress("DEPRECATION")
 class InfoActivity : AppCompatActivity() {
-
+    // References of Model class -> this for connection to server and activity
     var selectedPhotoUri: Uri? = null
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
     private lateinit var infoViewModel: InfoViewModel
+    private var selectImage :Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,21 +39,35 @@ class InfoActivity : AppCompatActivity() {
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
 
+        // select profile image
         btnSelectImage_info.setOnClickListener {
             if (infoViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 infoViewModel.pickImageFromGallery()
+                selectImage = true
             } else {
                 infoViewModel.takePermission()
             }
         }
 
+        // save information
         btnSave_Info.setOnClickListener {
-            infoViewModel.infoSuccessful()
+            if (selectImage){
+                infoViewModel.infoSuccessful()
+            }else{
+                    if (infoViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        infoViewModel.pickImageFromGallery()
+                        selectImage = true
+                    } else {
+                        infoViewModel.takePermission()
+                    }
+            }
+
         }
 
 
     }
 
+    // this is method to save image to upload
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -73,6 +88,7 @@ class InfoActivity : AppCompatActivity() {
         }
     }
 
+    // this is method to save image to upload
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == infoViewModel.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK && data != null) {
@@ -96,43 +112,7 @@ class InfoActivity : AppCompatActivity() {
         }
     }
 
-//    fun uploadImageToFirebaseStorage() {
-//        if (selectedPhotoUri == null) return
-//
-//        val filename = UUID.randomUUID().toString()
-//        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-//
-//        ref.putFile(selectedPhotoUri!!)
-//            .addOnSuccessListener {
-//                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
-//                ref.downloadUrl.addOnSuccessListener {
-//                    Log.d(TAG, "File Location: $it")
-//                    saveUserToFirebaseDatabase(it.toString())
-//                }
-//            }
-//            .addOnFailureListener {
-//                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-//            }
-//    }
-
-//    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
-//        val uid = FirebaseAuth.getInstance().uid ?: ""
-//        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-//
-//        val user = User(uid, edtName_Info.text.toString(), profileImageUrl)
-//
-//        ref.setValue(user)
-//            .addOnSuccessListener {
-//                Log.d(TAG, "Finally we saved the user to Firebase Database")
-//            }
-//            .addOnFailureListener {
-//                Log.d(TAG, "Failed to set value to database: ${it.message}")
-//            }
-//    }
-//
-//    class User(val uid: String, val username: String, val profileImageUrl: String)
-
-
+    // this is attached by Add Patient Activity and Add Patient ViewModel
     @Suppress("UNCHECKED_CAST")
     internal class MyViewModelFactory(private val infoActivity: InfoActivity) :
         ViewModelProvider.Factory {
@@ -140,5 +120,12 @@ class InfoActivity : AppCompatActivity() {
             return InfoViewModel(infoActivity) as T
         }
 
+    }
+
+    // when user go back button show Toast " You Must Insert Data "
+    override fun onBackPressed() {
+        val  start = Intent(this , InfoActivity::class.java)
+        startActivity(start)
+        Toast.makeText(this , "You Must Insert Data" , Toast.LENGTH_SHORT).show()
     }
 }

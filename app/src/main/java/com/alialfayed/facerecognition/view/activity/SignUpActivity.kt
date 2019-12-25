@@ -27,12 +27,16 @@ import java.util.*
 
 class SignUpActivity : AppCompatActivity() , View.OnClickListener{
 
+    // References of Model class -> this for connection to server and activity
     private lateinit var signUpViewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.alialfayed.facerecognition.R.layout.activity_sign_up)
+        // Reference of Model class
         this.signUpViewModel = ViewModelProviders.of(this,MyViewModelFactory(this)).get(SignUpViewModel::class.java)
+
+        // set Button on ready to able to click
         initComponent()
 
     }
@@ -50,27 +54,48 @@ class SignUpActivity : AppCompatActivity() , View.OnClickListener{
         when (view?.id) {
             R.id.btnSignUp_SignUp -> {
 
-                if (email.isEmpty()){
+                if (email.isNullOrEmpty()){
+                    Log.i("Signup","1")
                     edtEmail_SignUp.error = "Email Required!\nPlease, Type your Email!"
                     edtEmail_SignUp.requestFocus()
 
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                } else if (email.equals(" ")){
+                    Log.i("Signup","2")
+                    edtEmail_SignUp.error = "Email Required!\nPlease, Type your Email!"
+                    edtEmail_SignUp.requestFocus()
+
+                }else if (password.equals(" ")){
+                    Log.i("Signup","3")
+                    edtEmail_SignUp.error = "Password Required!\nPlease, Type your Email!"
+                    edtEmail_SignUp.requestFocus()
+
+                }else if (confirmPassword.equals(" ")){
+                    Log.i("Signup","4")
+                    edtEmail_SignUp.error = "Password Required!\nPlease, Type your Email!"
+                    edtEmail_SignUp.requestFocus()
+
+                }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    Log.i("Signup","5")
                     edtEmail_SignUp.error = "Valid Email Required!\nlike: example@example.com"
                     edtEmail_SignUp.requestFocus()
 
-                } else if (password.isEmpty()){
+                } else if (password.isNullOrEmpty()){
+                    Log.i("Signup","6")
                     edtPassword_SignUp.error = "Password Required!\nPlease, Type your Password!"
                     edtPassword_SignUp.requestFocus()
 
                 } else if (password.length < 6){
+                    Log.i("Signup","7")
                     edtPassword_SignUp.error = "Password should be at least 6 characters long!"
                     edtPassword_SignUp.requestFocus()
 
-                } else if (confirmPassword.isEmpty()){
+                } else if (confirmPassword.isNullOrEmpty()){
+                    Log.i("Signup","8")
                     edtConfirmPassword_Signup.error = "Confirm Password Required!\nPlease, Confirm your Password!"
                     edtConfirmPassword_Signup.requestFocus()
 
                 } else if (password != confirmPassword){
+                    Log.i("Signup","9")
                     AlertDialog.Builder(this@SignUpActivity)
                         .setTitle("Error")
                         .setMessage("Two passwords incompatible!")
@@ -79,6 +104,7 @@ class SignUpActivity : AppCompatActivity() , View.OnClickListener{
                         .show()
 
                 } else if (!signUpViewModel.isNetworkConnected()){
+                    Log.i("Signup","10")
                     AlertDialog.Builder(this@SignUpActivity)
                         .setTitle("Error")
                         .setMessage("Your Data transfer and Wifi connection closed!\nOpen Internet Connection and try again!")
@@ -86,7 +112,9 @@ class SignUpActivity : AppCompatActivity() , View.OnClickListener{
                         .setPositiveButton("Ok") { _, _ ->  }
                         .show()
                 } else {
+                    Log.i("Signup","11")
                     signUpViewModel.signUpCheck(email, password)
+
                 }
             }
             R.id.btnSignIn_SignUp ->{
@@ -107,11 +135,12 @@ class SignUpActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
-
+    // when user go back button finish Activity
     override fun onBackPressed() {
         finish()
     }
 
+    // this is attached by Sign Up Activity and Sign Up ViewModel
     @Suppress("UNCHECKED_CAST")
     internal class MyViewModelFactory(private val signUpActivity: SignUpActivity):
         ViewModelProvider.Factory{

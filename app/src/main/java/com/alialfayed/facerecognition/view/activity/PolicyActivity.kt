@@ -23,23 +23,36 @@ class PolicyActivity : AppCompatActivity() {
         btnHome_policy.setOnClickListener {
             val startActivity = Intent(this,HomeActivity::class.java)
             startActivity(startActivity)
+            finish()
+
         }
         btnPatient_policy.setOnClickListener {
             val startActivity = Intent(this,AddPatientActivity::class.java)
             startActivity(startActivity)
+            finish()
+
         }
         btnAddNumber_policy.setOnClickListener {
             val startActivity = Intent(this,AddNumberCallActivity::class.java)
             startActivity(startActivity)
+            finish()
+
         }
         btnProfile_policy.setOnClickListener {
             val startActivity = Intent(this,ProfileActivity::class.java)
             startActivity(startActivity)
+            finish()
+
         }
         btnPolicy_policy.setOnClickListener {
             val startActivity = Intent(this,PolicyActivity::class.java)
             startActivity(startActivity)
+            finish()
+
         }
 
+    }
+    override fun onBackPressed() {
+        finish()
     }
 }

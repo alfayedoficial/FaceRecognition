@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class ForgetPasswordActivity : AppCompatActivity() {
 
+    // References of Model class -> this for connection to server and activity
+
     private lateinit var forgetPasswordViewModel: ForgetPasswordViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +22,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
         this.forgetPasswordViewModel = ViewModelProviders.of(this,MyViewModelFactory(this)).get(ForgetPasswordViewModel::class.java)
 
+        // reset Password
         btn_ForgetPassword.setOnClickListener {
             val email = edtEmail_ForgetPassword.text.toString()
 
@@ -41,11 +44,16 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
     }
 
+    // this is attached by Forget Password Activity and Forget Password ViewModel
     @Suppress("UNCHECKED_CAST")
     internal class MyViewModelFactory(private val forgetPasswordActivity: ForgetPasswordActivity) :ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return ForgetPasswordViewModel(forgetPasswordActivity)as T
         }
 
+    }
+    // when user go back button finish Activity
+    override fun onBackPressed() {
+        finish()
     }
 }

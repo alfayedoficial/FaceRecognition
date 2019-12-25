@@ -11,7 +11,7 @@
         android:id="@+id/scrollViewHome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,25 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btnResetSafety"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@null"
+                        android:elevation="2dp"
+                        android:fontFamily="@font/bein"
+                        android:text="Set Safety"
+                        android:textColor="@color/green"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/txtAge_Home"
+                        app:layout_constraintTop_toBottomOf="@+id/txtAge_Home" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ProfileImage"
@@ -97,18 +116,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                     <TextView
-                        android:id="@+id/txtPatient_Home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_text"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/textView12"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/txtId_Home"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                        tools:text="@string/name_patient_home" />
-
-                    <TextView
                         android:id="@+id/textView12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +136,7 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/ProfileImage"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/txtPatient_Home"
+                        app:layout_constraintStart_toStartOf="@+id/txtId_Home"
                         tools:text="@string/age_home" />
 
                     <ImageButton
@@ -142,6 +149,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_cancelblue" />
+
+                    <TextView
+                        android:id="@+id/txtPatient_Home"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/color_text"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/txtAge_Home"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView11"
+                        app:layout_constraintTop_toBottomOf="@+id/txtId_Home" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -336,7 +356,7 @@
         android:layout_height="250dp"
         android:gravity="center|center_horizontal|fill_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,8 +2,10 @@ package com.alialfayed.facerecognition.viewmodel
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -12,9 +14,11 @@ import androidx.lifecycle.ViewModel
 import com.alialfayed.facerecognition.R
 import com.alialfayed.facerecognition.model.PatientModel
 import com.alialfayed.facerecognition.repository.FirebaseHandler
+import com.alialfayed.facerecognition.view.activity.AddNumberCallActivity
 import com.alialfayed.facerecognition.view.activity.HomeActivity
 import com.alialfayed.facerecognition.view.activity.SignInActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.NonCancellable.cancel
 import java.text.DateFormat
 import java.util.*
 
@@ -60,15 +64,34 @@ class HomeActivityViewModel(private val homeActivity: HomeActivity):ViewModel() 
      * method Sign Out
      */
     fun signout(){
-        val meg = "Are you sure you want to Log Out "
+        val meg = "Do you want to Log Out "
         AlertDialog.Builder(homeActivity)
             .setTitle("Log Out")
             .setMessage(meg)
+            .setCancelable(false)
             .setIcon(R.drawable.ic_successful)
             .setPositiveButton("Log Out") { _, _ ->
                 firebaseHandler.logout()
                 val start = Intent(homeActivity, SignInActivity::class.java)
                 homeActivity.startActivity(start)
+            }
+            .setNegativeButton("Cancel") { _, _ ->
+
+            }
+            .show()
+    }
+    fun delete(){
+        val meg = "Are you sure you want to Delete Patient "
+        AlertDialog.Builder(homeActivity)
+            .setTitle("Log Out")
+            .setMessage(meg)
+            .setCancelable(false)
+            .setIcon(R.drawable.ic_successful)
+            .setPositiveButton("Yes") { _, _ ->
+                homeActivity.delete()
+            }
+            .setNegativeButton("No") { _, _ ->
+
             }
             .show()
     }
@@ -83,6 +106,34 @@ class HomeActivityViewModel(private val homeActivity: HomeActivity):ViewModel() 
             Manifest.permission.CALL_PHONE
         )
         ActivityCompat.requestPermissions(homeActivity, arrayPermission, REQUEST_CALL_PHONE)
+    }
+
+    fun isNetworkConnected(): Boolean {
+        val connectivityManager =
+            homeActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnected
+    }
+
+    fun gotoAddNumber(number:String){
+        val meg = "Sorry you Do not have \" $number \" , Please add Number"
+        android.app.AlertDialog.Builder(homeActivity)
+            .setTitle("Add Emergency Numbers")
+            .setMessage(meg)
+            .setCancelable(false)
+            .setIcon(R.drawable.ic_successful)
+            .setPositiveButton("Add Number") { _, _ ->
+                val addNumber = Intent(homeActivity , AddNumberCallActivity::class.java)
+                homeActivity.startActivity(addNumber)
+                homeActivity.finish()
+            }
+            .setNegativeButton("Later"){_,_ ->
+            }
+            .show()
+    }
+
+    fun updateSafety(patientId:String){
+        firebaseHandler.setSafety(patientId)
     }
 
 }

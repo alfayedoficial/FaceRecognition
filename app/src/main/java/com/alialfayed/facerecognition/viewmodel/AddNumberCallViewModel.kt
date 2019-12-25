@@ -9,8 +9,10 @@ import kotlinx.android.synthetic.main.activity_add_number_call.*
 
 class AddNumberCallViewModel(private val addNumberCallActivity: AddNumberCallActivity) : ViewModel() {
 
+    // References of Firebase class -> this for connection to server
     private  var firebaseHandler: FirebaseHandler = FirebaseHandler(addNumberCallActivity , this)
 
+    // set Numbers
     fun setNumber(){
         val home = addNumberCallActivity.edtHomeNumber_Add_Number_Call.text.toString()
         val police = addNumberCallActivity.edtPolice_Number_Add_Number_Call.text.toString()

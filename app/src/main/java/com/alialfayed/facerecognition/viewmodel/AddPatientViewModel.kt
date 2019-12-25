@@ -22,6 +22,9 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewModel() {
+
+    // References of Firebase class -> this for connection to server
+
     val REQUEST_IMAGE_CAPTURE_1 = 100
     val REQUEST_IMAGE_CAPTURE_2 = 101
     val REQUEST_IMAGE_CAPTURE_3 = 102
@@ -40,11 +43,19 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
     private  var firebaseHandler:FirebaseHandler = FirebaseHandler(addPatientActivity , this)
 
 
+    // take checkPermission
     fun checkPermission(permission: String): Boolean {
         val check: Int = ContextCompat.checkSelfPermission(addPatientActivity, permission)
         return (check == PackageManager.PERMISSION_GRANTED)
     }
 
+    // take Permission
+    fun takePermission(){
+        val arrayPermission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(addPatientActivity, arrayPermission, PERMISSION_CODE)
+    }
+
+    // take image 1
     @Suppress("DEPRECATION")
     fun pickImageFromGallery() {
         val intent = Intent()
@@ -52,7 +63,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
         intent.action = Intent.ACTION_GET_CONTENT
         addPatientActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE_1)
     }
-
+    // take image 2
     @Suppress("DEPRECATION")
     fun pickimage2Fromgallery() {
         val intent = Intent()
@@ -60,6 +71,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
         intent.action = Intent.ACTION_GET_CONTENT
         addPatientActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE_2)
     }
+    // take image 3
     @Suppress("DEPRECATION")
     fun pickimage3Fromgallery() {
         val intent = Intent()
@@ -67,6 +79,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
         intent.action = Intent.ACTION_GET_CONTENT
         addPatientActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE_3)
     }
+    // take image 4
     @Suppress("DEPRECATION")
     fun pickimage4Fromgallery() {
         val intent = Intent()
@@ -74,6 +87,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
         intent.action = Intent.ACTION_GET_CONTENT
         addPatientActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE_4)
     }
+    // take image 5
     @Suppress("DEPRECATION")
     fun pickimage5Fromgallery() {
         val intent = Intent()
@@ -82,12 +96,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
         addPatientActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE_5)
     }
 
-    fun takePermission(){
-        val arrayPermission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-        ActivityCompat.requestPermissions(addPatientActivity, arrayPermission, PERMISSION_CODE)
-    }
-
-
+    // upload image 1
     @SuppressLint("ResourceAsColor")
     fun uploadimage1Tofirebasestorage() {
         firebaseStore = FirebaseStorage.getInstance()
@@ -105,7 +114,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                     image_1 = it.toString()
 //                    Toast.makeText(addPatientActivity," Image one Update " ,Toast.LENGTH_SHORT).show()
                     addPatientActivity.img_successful_1.visibility = View.VISIBLE
-                    addPatientActivity.img_successful_1.isEnabled = false
+                    addPatientActivity.btnSelectImage1_Add_Patient.isEnabled = false
                     addPatientActivity.btnSelectImage1_Add_Patient.setBackgroundResource(R.drawable.btn_blue)
                     addPatientActivity.btnSelectImage1_Add_Patient.setTextColor(Color.parseColor("#F5F5FC"))
                     addPatientActivity.flagStartUpdate = true
@@ -115,6 +124,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                 Toast.makeText(addPatientActivity," Sorry you have error " ,Toast.LENGTH_SHORT).show()
             }
     }
+    // upload image 2
     @SuppressLint("ResourceAsColor")
     fun uploadimage2Tofirebasestorage() {
         firebaseStore = FirebaseStorage.getInstance()
@@ -130,7 +140,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                     image_2 = it.toString()
 //                    Toast.makeText(addPatientActivity," Image Two Update " ,Toast.LENGTH_SHORT).show()
                     addPatientActivity.img_successful_2.visibility = View.VISIBLE
-                    addPatientActivity.img_successful_2.isEnabled = false
+                    addPatientActivity.btnSelectImage2_Add_Patient.isEnabled = false
                     addPatientActivity.btnSelectImage2_Add_Patient.setBackgroundResource(R.drawable.btn_blue)
                     addPatientActivity.btnSelectImage2_Add_Patient.setTextColor(Color.parseColor("#F5F5FC"))
                 }
@@ -140,6 +150,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
 
             }
     }
+    // upload image 3
     @SuppressLint("ResourceAsColor")
     fun uploadimage3Tofirebasestorage() {
         firebaseStore = FirebaseStorage.getInstance()
@@ -155,7 +166,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                     image_3 = it.toString()
 //                    Toast.makeText(addPatientActivity," Image Three Update " ,Toast.LENGTH_SHORT).show()
                     addPatientActivity.img_successful_3.visibility = View.VISIBLE
-                    addPatientActivity.img_successful_3.isEnabled = false
+                    addPatientActivity.btnSelectImage3_Add_Patient.isEnabled = false
                     addPatientActivity.btnSelectImage3_Add_Patient.setBackgroundResource(R.drawable.btn_blue)
                     addPatientActivity.btnSelectImage3_Add_Patient.setTextColor(Color.parseColor("#F5F5FC"))
                 }
@@ -165,6 +176,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
 
             }
     }
+    // upload image 4
     @SuppressLint("ResourceAsColor")
     fun uploadimage4Tofirebasestorage() {
         firebaseStore = FirebaseStorage.getInstance()
@@ -180,7 +192,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                      image_4 = it.toString()
 //                    Toast.makeText(addPatientActivity," Image Four Update " ,Toast.LENGTH_SHORT).show()
                     addPatientActivity.img_successful_4.visibility = View.VISIBLE
-                    addPatientActivity.img_successful_4.isEnabled = false
+                    addPatientActivity.btnSelectImage4_Add_Patient.isEnabled = false
                     addPatientActivity.btnSelectImage4_Add_Patient.setBackgroundResource(R.drawable.btn_blue)
                     addPatientActivity.btnSelectImage4_Add_Patient.setTextColor(Color.parseColor("#F5F5FC"))
                 }
@@ -190,6 +202,7 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
 
             }
     }
+    // upload image 5
     @SuppressLint("ResourceAsColor")
     fun uploadimage5Tofirebasestorage() {
         firebaseStore = FirebaseStorage.getInstance()
@@ -210,11 +223,12 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
                        image_5 = it.toString()
 //                       Toast.makeText(addPatientActivity," Image Five Update " ,Toast.LENGTH_SHORT).show()
                        addPatientActivity.img_successful_5.visibility = View.VISIBLE
-                       addPatientActivity.img_successful_5.isEnabled = false
+                       addPatientActivity.btnSelectImage5_Add_Patient.isEnabled = false
                        addPatientActivity.btnSelectImage5_Add_Patient.setBackgroundResource(R.drawable.btn_blue)
                        addPatientActivity.btnSelectImage5_Add_Patient.setTextColor(Color.parseColor("#F5F5FC"))
                        addPatientActivity.flagUpdate = true
                        addPatientActivity.flagStartUpdate = false
+                       addPatientActivity.btn_Save_Add_Patient.isEnabled = true
                    }
 
                 }
@@ -225,11 +239,12 @@ class AddPatientViewModel(val addPatientActivity: AddPatientActivity) : ViewMode
             }
     }
 
-
+    // set Patient Data
     fun setPatientDatabase(patientId :String ,patientName :String , patientAge :String){
         firebaseHandler.setPatient(patientId,patientName,patientAge,"Safety",image_1,image_2,image_3,image_4,image_5)
     }
 
+    // add number
     fun setNumber(){
         AlertDialog.Builder(addPatientActivity)
             .setTitle("Add Emergency Numbers")

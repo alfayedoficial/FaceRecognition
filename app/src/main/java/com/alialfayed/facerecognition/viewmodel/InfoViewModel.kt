@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
-import com.alialfayed.facerecognition.R
 import com.alialfayed.facerecognition.repository.FirebaseHandler
 import com.alialfayed.facerecognition.view.activity.InfoActivity
 import com.alialfayed.facerecognition.view.activity.SignInActivity
@@ -23,12 +22,23 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_info.*
 import java.util.*
+import androidx.core.content.ContextCompat.startActivity
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.R
+import kotlinx.android.synthetic.main.activity_sign_up.*
+import androidx.core.content.ContextCompat.startActivity
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
 
 /**
  * Class do :
  * Created by ( Eng Ali)
  */
 class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
+
+    // References of Firebase class -> this for connection to server
 
     val REQUEST_IMAGE_CAPTURE = 100
     val PERMISSION_CODE = 1001
@@ -39,7 +49,7 @@ class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
 
     private var firebaseHandler: FirebaseHandler = FirebaseHandler(infoActivity, this)
 
-
+    // select image
     @Suppress("DEPRECATION")
     fun pickImageFromGallery() {
         val intent = Intent()
@@ -48,10 +58,12 @@ class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
         infoActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_CAPTURE)
     }
 
+    // check permission
     fun checkPermission(permission: String): Boolean {
         val check: Int = ContextCompat.checkSelfPermission(infoActivity, permission)
         return (check == PackageManager.PERMISSION_GRANTED)
     }
+    // take permission
     fun takePermission(){
         val arrayPermission = arrayOf<String>(
             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -68,12 +80,15 @@ class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
         }
     }
 
+    // log out
     fun log(){
         firebaseHandler.logout()
     }
 
+    // update image to firebase
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    fun uploadImageToFirebaseStorage() {
+    fun uploadImageToFirebaseStorage(name:String , age : String , phone:String) {
+        infoActivity.disableLayout(false)
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
         if (infoActivity.selectedPhotoUri == null){
@@ -89,14 +104,11 @@ class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
 //                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
                 ref.downloadUrl.addOnSuccessListener {
 //                    Log.d(TAG, "File Location: $it")
-                    infoActivity.disableLayout(false)
-                    val name = infoActivity.edtName_Info.text.toString()
-                    val age = infoActivity.edtAge_Info.text.toString()
-                    val phone = infoActivity.edtPhone_Info.text.toString()
-                    val image = it.toString()
-                    Log.i("TAG","Update data")
-                    firebaseHandler.setUser(name,age,phone,image)
-                    gotoSignIn()
+                        val image = it.toString()
+                        Log.i("TAG","Update data")
+                        firebaseHandler.setUser(name,age,phone,image)
+                        gotoSignIn()
+
                 }
             }
             .addOnFailureListener {
@@ -106,20 +118,49 @@ class InfoViewModel(val infoActivity: InfoActivity):ViewModel() {
             }
     }
 
+    // check if ifro successful
     fun infoSuccessful(){
-        uploadImageToFirebaseStorage()
+        val name = infoActivity.edtName_Info.text.toString()
+        val age = infoActivity.edtAge_Info.text.toString()
+        val phone = infoActivity.edtPhone_Info.text.toString()
+        if (name.isNullOrEmpty()){
+            infoActivity.edtName_Info.error = "Name Required!\nPlease, Type your Email!"
+            infoActivity.edtName_Info.requestFocus()
+        }else if(name.equals(" ")){
+            infoActivity.edtName_Info.error = "Name Required!\nPlease, Type your Email!"
+            infoActivity.edtName_Info.requestFocus()
+        }else if (age.isNullOrEmpty()){
+            infoActivity.edtAge_Info.error = "Age Required!\nPlease, Type your Email!"
+            infoActivity.edtAge_Info.requestFocus()
+        }else if(age.equals(" ")){
+            infoActivity.edtAge_Info.error = "Age Required!\nPlease, Type your Email!"
+            infoActivity.edtAge_Info.requestFocus()
+        }else if (phone.isNullOrEmpty()){
+            infoActivity.edtPhone_Info.error = "Phone Required!\nPlease, Type your Email!"
+            infoActivity.edtPhone_Info.requestFocus()
+        }else if (phone.equals(" ")){
+            infoActivity.edtPhone_Info.error = "Phone Required!\nPlease, Type your Email!"
+            infoActivity.edtPhone_Info.requestFocus()
+        }else{
+            uploadImageToFirebaseStorage(name,age,phone)
+        }
+
+
+
     }
 
+    // go to sign in
     fun gotoSignIn(){
-        val meg = "Sign Up Successful , Please confirm the account and Sign In"
+        val meg = "Sign Up Successful , Please confirm your account and Sign In"
         AlertDialog.Builder(infoActivity)
             .setTitle("SignUp Successful")
             .setMessage(meg)
-            .setIcon(R.drawable.ic_successful)
-            .setPositiveButton("Ok") { _, _ ->
+            .setCancelable(false)
+            .setIcon(com.alialfayed.facerecognition.R.drawable.ic_successful)
+            .setPositiveButton("open Sign in") { _, _ ->
                 val start = Intent(infoActivity, SignInActivity::class.java)
-                infoActivity.startActivity(start)
                 firebaseHandler.logout()
+                infoActivity.startActivity(start)
                 infoActivity.finish()
             }
             .show()

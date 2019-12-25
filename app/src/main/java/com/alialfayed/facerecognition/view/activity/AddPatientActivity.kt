@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract.Helpers.update
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -21,10 +21,10 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_patient.*
-import kotlinx.coroutines.NonCancellable.start
 
-class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
+class AddPatientActivity : AppCompatActivity(), View.OnClickListener {
 
+    // References of Model class -> this for connection to server and activity
 
     private lateinit var addPatientViewModel: AddPatientViewModel
     var selectedphotouriOne: Uri? = null
@@ -33,29 +33,31 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
     var selectedphotouriFour: Uri? = null
     var selectedphotouriFive: Uri? = null
 
-    var flagUpdate:Boolean = false
-    var flagStartUpdate:Boolean = false
+    var flagUpdate: Boolean = false
+    var flagStartUpdate: Boolean = false
 
 
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
-    private  var mdatabaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Database")
-
+    private var mdatabaseReference: DatabaseReference =
+        FirebaseDatabase.getInstance().getReference("Database")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
-
-        addPatientViewModel = ViewModelProviders.of(this,MyViewModeFactory(this)).get(AddPatientViewModel::class.java)
-
+//        Reference of Model class
+        addPatientViewModel = ViewModelProviders.of(this, MyViewModeFactory(this))
+            .get(AddPatientViewModel::class.java)
+//        Reference of Firebase
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+        // set Button on ready to able to click
         onClickButton()
         onClickNav()
 
-
+        // Save Patient
         btn_Save_Add_Patient.setOnClickListener {
-            val id  = edtId_Add_Patient.text.toString()
+            val id = edtId_Add_Patient.text.toString()
             val name = edtName_Add_Patient.text.toString()
             val age = edtAge_Add_Patient.text.toString()
             when {
@@ -72,7 +74,7 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
                     edtAge_Add_Patient.requestFocus()
                 }
                 else -> when {
-                    flagUpdate -> addPatientViewModel.setPatientDatabase(id,name,age)
+                    flagUpdate -> addPatientViewModel.setPatientDatabase(id, name, age)
 
                     flagStartUpdate -> AlertDialog.Builder(this@AddPatientActivity)
                         .setTitle("Error")
@@ -92,23 +94,24 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
                 }
             }
         }
-
+        // update images
         btn_Update_Add_Patient.setOnClickListener {
             update()
         }
 
 
     }
+
     override fun onClick(view: View?) {
-        when(view?.id){
-            R.id.btnSelectImage1_Add_Patient ->{
+        when (view?.id) {
+            R.id.btnSelectImage1_Add_Patient -> {
                 if (addPatientViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     addPatientViewModel.pickImageFromGallery()
                 } else {
                     addPatientViewModel.takePermission()
                 }
             }
-            R.id.btnSelectImage2_Add_Patient ->{
+            R.id.btnSelectImage2_Add_Patient -> {
                 if (addPatientViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     addPatientViewModel.pickimage2Fromgallery()
                     addPatientViewModel.uploadimage1Tofirebasestorage()
@@ -119,7 +122,7 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
 
                 }
             }
-            R.id.btnSelectImage3_Add_Patient ->{
+            R.id.btnSelectImage3_Add_Patient -> {
                 if (addPatientViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     addPatientViewModel.pickimage3Fromgallery()
                     addPatientViewModel.uploadimage2Tofirebasestorage()
@@ -130,7 +133,7 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
 
                 }
             }
-            R.id.btnSelectImage4_Add_Patient ->{
+            R.id.btnSelectImage4_Add_Patient -> {
                 if (addPatientViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     addPatientViewModel.pickimage4Fromgallery()
                     addPatientViewModel.uploadimage3Tofirebasestorage()
@@ -141,7 +144,7 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
 
                 }
             }
-            R.id.btnSelectImage5_Add_Patient ->{
+            R.id.btnSelectImage5_Add_Patient -> {
                 if (addPatientViewModel.checkPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     addPatientViewModel.pickimage5Fromgallery()
                     addPatientViewModel.uploadimage4Tofirebasestorage()
@@ -153,13 +156,17 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
         }
 
     }
+
+    // this is attached by Add Patient Activity and Add Patient ViewModel
     @Suppress("UNCHECKED_CAST")
-    internal class MyViewModeFactory(private val addPatientActivity: AddPatientActivity):ViewModelProvider.Factory{
+    internal class MyViewModeFactory(private val addPatientActivity: AddPatientActivity) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return AddPatientViewModel(addPatientActivity) as T
         }
     }
 
+    // this is method to save image to upload
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -167,7 +174,7 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
     ) {
         when (requestCode) {
             addPatientViewModel.PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] ==PackageManager.PERMISSION_GRANTED
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     //permission from popup granted
                     addPatientViewModel.pickImageFromGallery()
@@ -184,29 +191,28 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
+    // this is method to save image to upload
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_1 && resultCode == Activity.RESULT_OK && data != null) {
             selectedphotouriOne = data.data
-        }
-        else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_2 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_2 && resultCode == Activity.RESULT_OK && data != null) {
             selectedphotouriTwo = data.data
-        }else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_3 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_3 && resultCode == Activity.RESULT_OK && data != null) {
             selectedphotouriThree = data.data
-        }
-        else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_4 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_4 && resultCode == Activity.RESULT_OK && data != null) {
             selectedphotouriFour = data.data
-        }else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_5 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == addPatientViewModel.REQUEST_IMAGE_CAPTURE_5 && resultCode == Activity.RESULT_OK && data != null) {
             selectedphotouriFive = data.data
         }
 
     }
-
-    private fun update(){
+    // update images
+    private fun update() {
         addPatientViewModel.uploadimage5Tofirebasestorage()
     }
 
-    private fun onClickButton(){
+    private fun onClickButton() {
         btnSelectImage1_Add_Patient.setOnClickListener(this)
         btnSelectImage2_Add_Patient.setOnClickListener(this)
         btnSelectImage3_Add_Patient.setOnClickListener(this)
@@ -216,75 +222,71 @@ class AddPatientActivity : AppCompatActivity() , View.OnClickListener {
         btn_Save_Add_Patient.setOnClickListener(this)
     }
 
-    private fun onClickNav(){
+    private fun onClickNav() {
         /**
          * Actions
          */
         btnHome_AddPatient.setOnClickListener {
-            val startActivity = Intent(this,HomeActivity::class.java)
+            val startActivity = Intent(this, HomeActivity::class.java)
             startActivity(startActivity)
         }
         btnPatient_AddPatient.setOnClickListener {
-            val startActivity = Intent(this,AddPatientActivity::class.java)
+            val startActivity = Intent(this, AddPatientActivity::class.java)
             startActivity(startActivity)
         }
         btnAddNumber_AddPatient.setOnClickListener {
-            val startActivity = Intent(this,AddNumberCallActivity::class.java)
+            val startActivity = Intent(this, AddNumberCallActivity::class.java)
             startActivity(startActivity)
         }
         btnProfile_AddPatient.setOnClickListener {
-            val startActivity = Intent(this,ProfileActivity::class.java)
+            val startActivity = Intent(this, ProfileActivity::class.java)
             startActivity(startActivity)
         }
         btnPolicy_AddPatient.setOnClickListener {
-            val startActivity = Intent(this,PolicyActivity::class.java)
+            val startActivity = Intent(this, PolicyActivity::class.java)
             startActivity(startActivity)
         }
 
     }
 
+    // this is work when Activity started
     override fun onStart() {
         super.onStart()
 
+        // this is work when Activity started
         mdatabaseReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.hasChild("")){
-                    for (patSnapshot in p0.children){
-                        val patPatient = patSnapshot.getValue(PatientModel::class.java)
-                        if (patPatient!!.getuserId() == FirebaseAuth.getInstance().currentUser!!.uid){
-                            btnSelectImage1_Add_Patient.isEnabled = false
-                            btnSelectImage2_Add_Patient.isEnabled = false
-                            btnSelectImage3_Add_Patient.isEnabled = false
-                            btnSelectImage4_Add_Patient.isEnabled = false
-                            btnSelectImage5_Add_Patient.isEnabled = false
-                            btn_Update_Add_Patient.isEnabled = false
-                            btn_Save_Add_Patient.isEnabled = false
-                            edtId_Add_Patient.isEnabled = false
-                            edtName_Add_Patient.isEnabled = false
-                            edtAge_Add_Patient.isEnabled = false
-                            textView8.visibility = View.VISIBLE
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // get data from PatientModel Data
+                for (patientSnapshot in dataSnapshot.children) {
+                    // get data from PhoneList Data kind of PatientModel
+                    val patSnapShot = patientSnapshot.getValue(PatientModel::class.java)
+                    // check if user in data
+                    if (patSnapShot!!.getuserId() == FirebaseAuth.getInstance().currentUser!!.uid) {
+                        // check if user have data
+                        if (patSnapShot!!.getvisibleData() == "true") {
+                            // actions if true
+                            scrollViewPaient.visibility = View.GONE
+                            textView8Addpatient.visibility = View.VISIBLE
+                            Log.i("PatientActivity", "visibleData == true")
                         }else{
-                            btnSelectImage1_Add_Patient.isEnabled = true
-                            btnSelectImage2_Add_Patient.isEnabled = true
-                            btnSelectImage3_Add_Patient.isEnabled = true
-                            btnSelectImage4_Add_Patient.isEnabled = true
-                            btnSelectImage5_Add_Patient.isEnabled = true
-                            btn_Update_Add_Patient.isEnabled = true
-                            btn_Save_Add_Patient.isEnabled = true
-                            edtId_Add_Patient.isEnabled = true
-                            edtName_Add_Patient.isEnabled = true
-                            edtAge_Add_Patient.isEnabled = true
-                            textView8.visibility = View.GONE
-
+                            // actions if false
+                            scrollViewPaient.visibility = View.VISIBLE
+                            textView8Addpatient.visibility = View.GONE
+                            Log.i("PatientActivity", "visibleData == false")
                         }
                     }
                 }
             }
         })
+    }
+
+    // when user go back button finish Activity
+    override fun onBackPressed() {
+        finish()
     }
 
 

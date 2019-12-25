@@ -7,9 +7,45 @@
     tools:context=".view.activity.AddNumberCallActivity"
     android:background="@drawable/background">
 
+    <Button
+        android:id="@+id/btn_Reset_Add_Number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_red"
+        android:elevation="2dp"
+        android:fontFamily="@font/bein"
+        android:text="Reset Number List"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center"
+        android:text="Now not available to add more List Of Numbers"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
     <ScrollView
+        android:id="@+id/scrollViewAddNumbber"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,19 +70,6 @@
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="Sorry, it is not possible to add more than one List Of Numbers now"
-                android:textColor="@color/red"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintStart_toStartOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintTop_toBottomOf="@+id/edtHospital_Number_Add_Number_Call" />
 
             <EditText
                 android:id="@+id/edtDoctor_Number_Add_Number_Call"
@@ -149,6 +172,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/btn_green"
                 android:elevation="2dp"
                 android:fontFamily="@font/bein"
@@ -156,30 +180,10 @@
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintStart_toStartOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-            <Button
-                android:id="@+id/btn_Reset_Add_Number"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_red"
-                android:elevation="2dp"
-                android:fontFamily="@font/bein"
-                android:text="Reset Number List"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/edtHospital_Number_Add_Number_Call"
-                app:layout_constraintTop_toBottomOf="@+id/btn_Save_Add_Number"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/edtHospital_Number_Add_Number_Call" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

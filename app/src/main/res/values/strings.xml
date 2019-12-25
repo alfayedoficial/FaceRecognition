@@ -50,5 +50,21 @@
     <string name="id_home">Id :</string>
     <string name="name_patient_home">Name Patient :</string>
     <string name="age_home">Age :</string>
+    <string name="info">
+        Controlling Risks is one of the world\'s essential aspects that is taken into consideration.
+        With the raise of number of Alzheimer patients  and children who get lost,
+        we decided to work on modifying a safety system for our targeted population,
+        which is a door lock controlled by a modified face recognition camera.
+        These two parts are connected on this mobile application.
+        The application aims to look over your child or the patient and sends notification for the guardian in the dangerous statues. \n
+        How does this work?\n
+        All you have to do is:\n
+        1-	Sign up on the application.\n
+        2-	Add your data (the guardian for the patient or the child).\n
+        3-	Add the patient data.\n
+        4-	Upload five images for the patient from different angles.\n
+        5-	Add hospital, emergency, and doctor number.\n
+        6-	Go ahead and feel free to do your daily routine and safe on your family!\n
+    </string>
 
 </resources>
